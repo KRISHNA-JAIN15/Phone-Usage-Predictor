@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Screen Time Prediction</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f3f4f7;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        text-align: center;
+        color: #4caf50;
+        margin-top: 50px;
+      }
+
+      form {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 30px;
+        width: 60%;
+        margin: 20px auto;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+        display: inline-block;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0 20px 0;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 15px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .slider-value {
+        color: #4caf50;
+        font-weight: bold;
+        display: inline-block;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .select-label {
+        color: #4caf50;
+      }
+
+      .dropdown {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Predict Total Screen Time (hrs/day)</h1>
+      <form action="/predict" method="POST">
+        <label for="Age">Age:</label>
+        <input type="number" name="Age" required /><br /><br />
+
+        <label for="Gender">Gender:</label>
+        <select name="Gender" required class="dropdown">
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+          <option value="Male">Male</option></select
+        ><br /><br />
+
+        <label for="Location">Location:</label>
+        <select name="Location" required class="dropdown">
+          <option value="Jaipur">Jaipur</option>
+          <option value="Pune">Pune</option>
+          <option value="Chennai">Chennai</option>
+          <option value="Kolkata">Kolkata</option>
+          <option value="Bangalore">Bangalore</option>
+          <option value="Ahmedabad">Ahmedabad</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Mumbai">Mumbai</option>
+          <option value="Lucknow">Lucknow</option>
+          <option value="Hyderabad">Hyderabad</option></select
+        ><br /><br />
+
+        <label for="Phone Brand">Phone Brand:</label>
+        <select name="Phone Brand" required class="dropdown">
+          <option value="Nokia">Nokia</option>
+          <option value="OnePlus">OnePlus</option>
+          <option value="Xiaomi">Xiaomi</option>
+          <option value="Vivo">Vivo</option>
+          <option value="Apple">Apple</option>
+          <option value="Samsung">Samsung</option>
+          <option value="Realme">Realme</option>
+          <option value="Google Pixel">Google Pixel</option>
+          <option value="Motorola">Motorola</option>
+          <option value="Oppo">Oppo</option></select
+        ><br /><br />
+
+        <label for="OS">Operating System:</label>
+        <select name="OS" required class="dropdown">
+          <option value="Android">Android</option>
+          <option value="iOS">iOS</option></select
+        ><br /><br />
+
+        <label for="Screen Time">Screen Time (hrs/day):</label>
+        <input
+          type="range"
+          name="Screen Time"
+          min="0"
+          max="24"
+          step="0.1"
+          value="6.8"
+          required
+        />
+        <span id="screen-time-value" class="slider-value">6.8</span>
+        hrs/day<br /><br />
+
+        <label for="Data Usage">Data Usage (GB/month):</label>
+        <input
+          type="range"
+          name="Data Usage"
+          min="0"
+          max="100"
+          step="0.1"
+          value="15.2"
+          required
+        />
+        <span id="data-usage-value" class="slider-value">15.2</span>
+        GB/month<br /><br />
+
+        <label for="Monthly Recharge Cost">Monthly Recharge Cost (INR):</label>
+        <input
+          type="range"
+          name="Monthly Recharge Cost"
+          min="0"
+          max="5000"
+          step="1"
+          value="850"
+          required
+        />
+        <span id="recharge-cost-value" class="slider-value">850</span>
+        INR<br /><br />
+
+        <label for="Number of Apps Installed">Number of Apps Installed:</label>
+        <input
+          type="number"
+          name="Number of Apps Installed"
+          required
+        /><br /><br />
+
+        <label for="Social Media Time">Social Media Time (hrs/day):</label>
+        <input
+          type="range"
+          name="Social Media Time"
+          min="0"
+          max="10"
+          step="0.1"
+          value="3.5"
+          required
+        />
+        <span id="social-media-value" class="slider-value">3.5</span>
+        hrs/day<br /><br />
+
+        <label for="E-commerce Spend">E-commerce Spend (INR/month):</label>
+        <input type="number" name="E-commerce Spend" required /><br /><br />
+
+        <label for="Streaming Time">Streaming Time (hrs/day):</label>
+        <input
+          type="range"
+          name="Streaming Time"
+          min="0"
+          max="10"
+          step="0.1"
+          value="4.2"
+          required
+        />
+        <span id="streaming-value" class="slider-value">4.2</span>
+        hrs/day<br /><br />
+
+        <label for="Gaming Time">Gaming Time (hrs/day):</label>
+        <input
+          type="range"
+          name="Gaming Time"
+          min="0"
+          max="10"
+          step="0.1"
+          value="2.1"
+          required
+        />
+        <span id="gaming-value" class="slider-value">2.1</span>
+        hrs/day<br /><br />
+
+        <label for="Calls Duration">Calls Duration (hrs/day):</label>
+        <input
+          type="range"
+          name="Calls Duration"
+          min="0"
+          max="10"
+          step="0.1"
+          value="2.1"
+          required
+        />
+        <span id="calls-duration-value" class="slider-value">2.1</span>
+        hrs/day<br /><br />
+
+        <label for="Primary Use">Primary Use:</label>
+        <select name="Primary Use" required class="dropdown">
+          <option value="Education">Education</option>
+          <option value="Gaming">Gaming</option>
+          <option value="Work">Work</option>
+          <option value="Social Media">Social Media</option>
+          <option value="Entertainment">Entertainment</option></select
+        ><br /><br />
+
+        <button type="submit">Predict</button>
+      </form>
+    </div>
+
+    <script>
+      const screenTimeSlider = document.querySelector(
+        'input[name="Screen Time"]'
+      );
+      const screenTimeValue = document.getElementById("screen-time-value");
+      screenTimeSlider.addEventListener("input", function () {
+        screenTimeValue.textContent = screenTimeSlider.value;
+      });
+
+      const dataUsageSlider = document.querySelector(
+        'input[name="Data Usage"]'
+      );
+      const dataUsageValue = document.getElementById("data-usage-value");
+      dataUsageSlider.addEventListener("input", function () {
+        dataUsageValue.textContent = dataUsageSlider.value;
+      });
+
+      const rechargeCostSlider = document.querySelector(
+        'input[name="Monthly Recharge Cost"]'
+      );
+      const rechargeCostValue = document.getElementById("recharge-cost-value");
+      rechargeCostSlider.addEventListener("input", function () {
+        rechargeCostValue.textContent = rechargeCostSlider.value;
+      });
+
+      const socialMediaSlider = document.querySelector(
+        'input[name="Social Media Time"]'
+      );
+      const socialMediaValue = document.getElementById("social-media-value");
+      socialMediaSlider.addEventListener("input", function () {
+        socialMediaValue.textContent = socialMediaSlider.value;
+      });
+
+      const streamingSlider = document.querySelector(
+        'input[name="Streaming Time"]'
+      );
+      const streamingValue = document.getElementById("streaming-value");
+      streamingSlider.addEventListener("input", function () {
+        streamingValue.textContent = streamingSlider.value;
+      });
+
+      const gamingSlider = document.querySelector('input[name="Gaming Time"]');
+      const gamingValue = document.getElementById("gaming-value");
+      gamingSlider.addEventListener("input", function () {
+        gamingValue.textContent = gamingSlider.value;
+      });
+
+      const callsDurationSlider = document.querySelector(
+        'input[name="Calls Duration"]'
+      );
+      const callsDurationValue = document.getElementById(
+        "calls-duration-value"
+      );
+      callsDurationSlider.addEventListener("input", function () {
+        callsDurationValue.textContent = callsDurationSlider.value;
+      });
+    </script>
+  </body>
+</html>
